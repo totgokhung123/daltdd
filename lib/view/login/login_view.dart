@@ -2,6 +2,7 @@ import 'package:fitness/common/colo_extension.dart';
 import 'package:fitness/common_widget/round_button.dart';
 import 'package:fitness/common_widget/round_textfield.dart';
 import 'package:fitness/view/login/complete_profile_view.dart';
+import 'package:fitness/view/login/signup_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -81,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ],
                 ),
-               const Spacer(),
+                const Spacer(),
                 RoundButton(
                     title: "Login",
                     onPressed: () {
@@ -171,7 +172,12 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Điều hướng sang SignUpView
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpView()),
+                    );
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

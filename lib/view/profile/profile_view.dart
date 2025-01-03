@@ -388,12 +388,21 @@
 //   }
 // }
 
+import 'package:fitness/view/profile/AchievementView.dart';
+import 'package:fitness/view/profile/ActivityHistoryView.dart';
+import 'package:fitness/view/profile/ContactUsView.dart';
+import 'package:fitness/view/profile/PrivacyPolicyView.dart';
+import 'package:fitness/view/profile/SettingView.dart';
+import 'package:fitness/view/profile/WorkoutProgressView.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/colo_extension.dart';
 import '../../common_widget/round_button.dart';
 import '../../common_widget/setting_row.dart';
 import '../../common_widget/title_subtitle_cell.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'edit_profile_view.dart'; // Đảm bảo đã import EditProfileView
+
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -410,6 +419,24 @@ class _ProfileViewState extends State<ProfileView> {
   String height = "180cm";
   String weight = "65kg";
   String age = "22yo";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Tải dữ liệu từ SharedPreferences
+  _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      name = prefs.getString('name') ?? 'John Doe';
+      height = prefs.getString('height') ?? '170';
+      weight = prefs.getString('weight') ?? '60';
+      age = prefs.getString('age') ?? '25';
+    });
+  }
 
   List accountArr = [
     {"image": "assets/img/p_personal.png", "name": "Personal Data", "tag": "1"},
@@ -466,6 +493,74 @@ class _ProfileViewState extends State<ProfileView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
+                // children: [
+                //   ClipRRect(
+                //     borderRadius: BorderRadius.circular(30),
+                //     child: Image.asset(
+                //       "assets/img/u2.png",
+                //       width: 50,
+                //       height: 50,
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                //   const SizedBox(width: 15),
+                //   Expanded(
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           name,
+                //           style: TextStyle(
+                //             color: TColor.black,
+                //             fontSize: 14,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         ),
+                //         Text(
+                //           "Lose a Fat Program",
+                //           style: TextStyle(
+                //             color: TColor.gray,
+                //             fontSize: 12,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                //   SizedBox(
+                //     width: 70,
+                //     height: 25,
+                //     child: RoundButton(
+                //       title: "Edit",
+                //       type: RoundButtonType.bgGradient,
+                //       fontSize: 12,
+                //       fontWeight: FontWeight.w400,
+                //       onPressed: () async {
+                //         // Chuyển tới màn hình chỉnh sửa và nhận thông tin mới
+                //         final result = await Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //             builder: (context) => EditProfileView(
+                //               name: name,
+                //               height: height,
+                //               weight: weight,
+                //               age: age,
+                //             ),
+                //           ),
+                //         );
+                //
+                //         // Nếu có dữ liệu trả về từ EditProfileView, cập nhật thông tin
+                //         if (result != null && result is Map<String, String>) {
+                //           setState(() {
+                //             name = result['name']!;
+                //             height = result['height']!;
+                //             weight = result['weight']!;
+                //             age = result['age']!;
+                //           });
+                //         }
+                //       },
+                //     ),
+                //   ),
+                // ],
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30),
@@ -524,16 +619,25 @@ class _ProfileViewState extends State<ProfileView> {
                         // Nếu có dữ liệu trả về từ EditProfileView, cập nhật thông tin
                         if (result != null && result is Map<String, String>) {
                           setState(() {
+                            // Cập nhật các giá trị name, height, weight, age mới
                             name = result['name']!;
                             height = result['height']!;
                             weight = result['weight']!;
                             age = result['age']!;
                           });
+
+                          // Cập nhật vào SharedPreferences (nếu cần thiết)
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString('name', name);
+                          prefs.setString('height', height);
+                          prefs.setString('weight', weight);
+                          prefs.setString('age', age);
                         }
                       },
                     ),
                   ),
                 ],
+
               ),
               const SizedBox(height: 15),
               Row(
@@ -590,7 +694,41 @@ class _ProfileViewState extends State<ProfileView> {
                         return SettingRow(
                           icon: iObj["image"].toString(),
                           title: iObj["name"].toString(),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (iObj["tag"] == "1") {
+                              // Điều hướng tới trang chỉnh sửa Personal Data
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>  EditProfileView(name: name, height: height, weight: weight, age: age), // Trang chỉnh sửa hồ sơ
+                                ),
+                              );
+                            } else if (iObj["tag"] == "2") {
+                              // Điều hướng tới trang Achievement (Thành tựu)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AchievementView(), // Trang Achievement
+                                ),
+                              );
+                            } else if (iObj["tag"] == "3") {
+                              // Điều hướng tới trang Activity History (Lịch sử hoạt động)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ActivityHistoryView(), // Trang Activity History
+                                ),
+                              );
+                            } else if (iObj["tag"] == "4") {
+                              // Điều hướng tới trang Workout Progress (Tiến độ tập luyện)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const WorkoutProgressView(), // Trang Workout Progress
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                     ),
@@ -599,14 +737,12 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               const SizedBox(height: 25),
               Container(
-                padding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 decoration: BoxDecoration(
-                    color: TColor.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: const [
-                      BoxShadow(color: Colors.black12, blurRadius: 2)
-                    ]),
+                  color: TColor.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 2)],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -618,9 +754,7 @@ class _ProfileViewState extends State<ProfileView> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    const SizedBox(height: 8),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
@@ -631,13 +765,45 @@ class _ProfileViewState extends State<ProfileView> {
                         return SettingRow(
                           icon: iObj["image"].toString(),
                           title: iObj["name"].toString(),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (iObj["tag"] == "5") {
+                              // Điều hướng tới trang Contact Us (Liên hệ)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ContactUsView(), // Trang Contact Us
+                                ),
+                              );
+                            } else if (iObj["tag"] == "6") {
+                              // Điều hướng tới trang Privacy Policy (Chính sách bảo mật)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PrivacyPolicyView(), // Trang Privacy Policy
+                                ),
+                              );
+                            }
+                            else if (iObj["tag"] == "7") {
+                              // Điều hướng tới trang Settings (Cài đặt)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SettingView(
+                                    onLanguageChanged: (Locale locale) {
+                                      // Đảm bảo bạn có một hàm thay đổi ngôn ngữ ở đây
+                                      print('Ngôn ngữ đã thay đổi thành: $locale');
+                                    },
+                                  ), // Trang Setting với tham số onLanguageChanged
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -720,7 +886,7 @@ class _EditProfileViewState extends State<EditProfileView> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Lấy thông tin từ các trường nhập liệu và trả về
                 Navigator.pop(context, {
                   'name': _nameController.text,

@@ -4,6 +4,7 @@ import 'package:fitness/common_widget/round_textfield.dart';
 import 'package:fitness/view/login/complete_profile_view.dart';
 import 'package:fitness/view/login/signup_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness/ApiService.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -13,10 +14,15 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  bool isCheck = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isPasswordVisible =
+      false; // Biến để kiểm tra trạng thái ẩn/hiện mật khẩu
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: TColor.white,
       body: SingleChildScrollView(
@@ -44,7 +50,8 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   height: media.width * 0.04,
                 ),
-                const RoundTextField(
+                RoundTextField(
+                  controller: emailController,
                   hitText: "Email",
                   icon: "assets/img/email.png",
                   keyboardType: TextInputType.emailAddress,
@@ -53,22 +60,32 @@ class _LoginViewState extends State<LoginView> {
                   height: media.width * 0.04,
                 ),
                 RoundTextField(
+                  controller: passwordController,
                   hitText: "Password",
                   icon: "assets/img/lock.png",
-                  obscureText: true,
+                  obscureText:
+                      !isPasswordVisible, // Đặt lại giá trị obscureText tùy theo biến isPasswordVisible
                   rigtIcon: TextButton(
-                      onPressed: () {},
-                      child: Container(
-                          alignment: Alignment.center,
+                    onPressed: () {
+                      setState(() {
+                        isPasswordVisible =
+                            !isPasswordVisible; // Chuyển trạng thái ẩn/hiện mật khẩu
+                      });
+                    },
+                    child: Container(
+                        alignment: Alignment.center,
+                        width: 20,
+                        height: 20,
+                        child: Image.asset(
+                          isPasswordVisible
+                              ? "assets/img/show_password.png" // Hình ảnh cho khi mật khẩu hiển thị
+                              : "assets/img/show_password.png", // Hình ảnh cho khi mật khẩu ẩn
                           width: 20,
                           height: 20,
-                          child: Image.asset(
-                            "assets/img/show_password.png",
-                            width: 20,
-                            height: 20,
-                            fit: BoxFit.contain,
-                            color: TColor.gray,
-                          ))),
+                          fit: BoxFit.contain,
+                          color: TColor.gray,
+                        )),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -85,18 +102,61 @@ class _LoginViewState extends State<LoginView> {
                 const Spacer(),
                 RoundButton(
                     title: "Login",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const CompleteProfileView()));
+                    onPressed: () async {
+                      try {
+                        var response = await ApiService().loginUser(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        if (response['message'] == "Login successful") {
+                          // Điều hướng sang trang khác sau khi đăng nhập thành công
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CompleteProfileView(),
+                            ),
+                          );
+                        } else {
+                          // Hiển thị thông báo lỗi nếu đăng nhập không thành công
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Invalid email or password'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        // Hiển thị thông báo lỗi nếu có lỗi khi gửi yêu cầu
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text('Error'),
+                            content: Text('An error occurred: $e'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     }),
                 SizedBox(
                   height: media.width * 0.04,
                 ),
                 Row(
-                  // crossAxisAlignment: CrossAxisAlignment.,
                   children: [
                     Expanded(
                         child: Container(
@@ -170,34 +230,35 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   height: media.width * 0.04,
                 ),
-                TextButton(
-                  onPressed: () {
-                    // Điều hướng sang SignUpView
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignUpView()),
-                    );
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Don’t have an account yet? ",
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Don’t have an account yet? ",
+                      style: TextStyle(
+                        color: TColor.black,
+                        fontSize: 14,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // Điều hướng sang SignUpView
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpView()),
+                        );
+                      },
+                      child: Text(
+                        "Register",
                         style: TextStyle(
                           color: TColor.black,
                           fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      Text(
-                        "Register",
-                        style: TextStyle(
-                            color: TColor.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: media.width * 0.04,

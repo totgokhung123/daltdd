@@ -151,4 +151,3 @@ class _SettingViewState extends State<SettingView> {
     );
   }
 }
-

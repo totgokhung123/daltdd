@@ -33,6 +33,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   shared_preferences: ^2.0.15  # Cập nhật phiên bản mới nhất từ pub.dev
+#  font_awesome_flutter: ^10.2.1 #icon
+#  url_launcher: ^6.1.7 #thư viện đường link
+  url_launcher: ^6.0.20
+  font_awesome_flutter: ^10.1.0
+
+
 
 
 
@@ -50,7 +56,7 @@ dependencies:
     path: dev_lib/calendar_agenda/
   intl: ^0.18.1
 
-dependency_overrides: 
+dependency_overrides:
   intl: ^0.18.1
 
 dev_dependencies:

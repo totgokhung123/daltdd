@@ -299,5 +299,3 @@ class _EditProfileViewState extends State<EditProfileView> {
     );
   }
 }
-
-

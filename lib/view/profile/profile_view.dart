@@ -771,7 +771,7 @@ class _ProfileViewState extends State<ProfileView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ContactUsView(), // Trang Contact Us
+                                  builder: (context) => ContactUsView(), // Trang Contact Us
                                 ),
                               );
                             } else if (iObj["tag"] == "6") {

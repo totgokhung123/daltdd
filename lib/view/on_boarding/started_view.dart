@@ -1,6 +1,6 @@
 import 'package:fitness/common/colo_extension.dart';
-import 'package:fitness/view/on_boarding/on_boarding_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness/view/login/login_view.dart';
 
 import '../../common_widget/round_button.dart';
 
@@ -62,7 +62,7 @@ class _StartedViewState extends State<StartedView> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const OnBoardingView()));
+                                builder: (context) => const LoginView()));
                       } else {
                         //Change Color
                         setState(() {

@@ -4,14 +4,14 @@ import '../../common/colo_extension.dart';
 import '../../common_widget/round_button.dart';
 import 'comparison_view.dart';
 
-class PhotoProgressView extends StatefulWidget {
-  const PhotoProgressView({super.key});
+class ProgressView extends StatefulWidget {
+  const ProgressView({super.key});
 
   @override
-  State<PhotoProgressView> createState() => _PhotoProgressViewState();
+  State<ProgressView> createState() => _ProgressViewState();
 }
 
-class _PhotoProgressViewState extends State<PhotoProgressView> {
+class _ProgressViewState extends State<ProgressView> {
   List photoArr = [
     {
       "time": "2 June",

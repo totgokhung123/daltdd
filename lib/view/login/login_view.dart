@@ -5,6 +5,7 @@ import 'package:fitness/view/login/complete_profile_view.dart';
 import 'package:fitness/view/login/signup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/ApiService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -109,6 +110,16 @@ class _LoginViewState extends State<LoginView> {
                           password: passwordController.text,
                         );
                         if (response['message'] == "Login successful") {
+                          var userId = response['userId']; // API trả về userId
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('userId',
+                              userId); // Lưu userId vào SharedPreferences
+
+                          var savedUserId = prefs.getString('userId');
+                          print(
+                              'Saved User ID: $savedUserId'); // In ra để xác nhận
+
                           // Điều hướng sang trang khác sau khi đăng nhập thành công
                           Navigator.push(
                             context,

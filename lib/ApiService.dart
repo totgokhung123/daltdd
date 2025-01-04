@@ -55,4 +55,25 @@ class ApiService {
       throw Exception('Failed to Create accout');
     }
   }
+
+  Future<void> updateUserProfile({
+    required String userId,
+    required String weight,
+    required String height,
+    required String dateOfBirth,
+  }) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2/flutter/completeProfile.php'),
+      body: {
+        'user_id': userId,
+        'weight': weight,
+        'height': height,
+        'date_of_birth': dateOfBirth,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update user profile');
+    }
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:fitness/common/colo_extension.dart';
 import 'package:fitness/view/login/what_your_goal_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness/ApiService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common_widget/round_button.dart';
 import '../../common_widget/round_textfield.dart';
@@ -14,6 +16,54 @@ class CompleteProfileView extends StatefulWidget {
 
 class _CompleteProfileViewState extends State<CompleteProfileView> {
   TextEditingController txtDate = TextEditingController();
+  TextEditingController txtWeight = TextEditingController();
+  TextEditingController txtHeight = TextEditingController();
+  String? userId; // Biến để lưu userId
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId(); // Gọi hàm để lấy userId
+  }
+
+  void _loadUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId =
+          prefs.getString('userId'); // Truy xuất userId từ SharedPreferences
+    });
+  }
+
+  void updateProfile() async {
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User ID not found! Please login again.')),
+      );
+      return;
+    }
+
+    try {
+      await ApiService().updateUserProfile(
+        userId: userId!,
+        dateOfBirth: txtDate.text,
+        weight: txtWeight.text,
+        height: txtHeight.text,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile updated successfully!')),
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const WhatYourGoalView()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update profile: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,95 +98,107 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                 SizedBox(
                   height: media.width * 0.05,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    children: [
-                      RoundTextField(
-                        controller: txtDate,
-                        hitText: "Date of Birth",
-                        icon: "assets/img/date.png",
+                RoundTextField(
+                  controller: txtDate,
+                  hitText: "Date of Birth (yyyy-mm-dd)",
+                  icon: "assets/img/date.png",
+                ),
+                SizedBox(height: media.width * 0.04),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RoundTextField(
+                        controller: txtWeight,
+                        hitText: "Your Weight",
+                        icon: "assets/img/weight.png",
                       ),
-                      SizedBox(
-                        height: media.width * 0.04,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: TColor.secondaryG),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RoundTextField(
-                              controller: txtDate,
-                              hitText: "Your Weight",
-                              icon: "assets/img/weight.png",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: TColor.secondaryG,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "KG",
-                              style:
-                                  TextStyle(color: TColor.white, fontSize: 12),
-                            ),
-                          )
-                        ],
+                      child: const Text(
+                        "KG",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
-                      SizedBox(
-                        height: media.width * 0.04,
+                    ),
+                  ],
+                ),
+                SizedBox(height: media.width * 0.04),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RoundTextField(
+                        controller: txtHeight,
+                        hitText: "Your Height",
+                        icon: "assets/img/hight.png",
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RoundTextField(
-                              controller: txtDate,
-                              hitText: "Your Height",
-                              icon: "assets/img/hight.png",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: TColor.secondaryG,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "CM",
-                              style:
-                                  TextStyle(color: TColor.white, fontSize: 12),
-                            ),
-                          )
-                        ],
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: TColor.secondaryG),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      SizedBox(
-                        height: media.width * 0.07,
+                      child: const Text(
+                        "CM",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
-                      RoundButton(
-                          title: "Next >",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WhatYourGoalView()));
-                          }),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: media.width * 0.07),
+                RoundButton(
+                  title: "Next >",
+                  onPressed: () async {
+                    try {
+                      // Lấy userId từ SharedPreferences
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      String? userId = prefs.getString('userId');
+
+                      if (userId != null) {
+                        // Cập nhật thông tin người dùng
+                        await ApiService().updateUserProfile(
+                          userId: userId,
+                          weight: txtWeight.text,
+                          height: txtHeight.text,
+                          dateOfBirth: txtDate.text,
+                        );
+
+                        // Hiển thị thông báo thành công
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Profile updated successfully!')),
+                        );
+
+                        // Điều hướng tới màn hình tiếp theo
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WhatYourGoalView()),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  'User ID not found. Please log in again.')),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Failed to update profile: $e')),
+                      );
+                    }
+                  },
                 ),
               ],
             ),

@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode([
                 "message" => "Login successful",
                 "userId" => $user['id'], // Trả về đúng trường userId
-                "weight" => $user['weight'],// Trả về weight để xác định Goal
-                "height" => $user['height'], // Trả về height để xác định BMI
+                "weight" => $user['weight'] ?? "NULL", // Trả về weight để xác định Goal
+                "height" => $user['height'] ?? "NULL", // Trả về height để xác định BMI
             ]);
         } else {
             http_response_code(401);

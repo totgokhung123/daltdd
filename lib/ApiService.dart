@@ -23,6 +23,7 @@ class ApiService {
   }) async {
     final response = await http.post(
       Uri.parse('http://10.0.2.2/flutter/login.php'),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'email': email,
         'password': password,
@@ -30,9 +31,13 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      try {
+        return json.decode(response.body);
+      } catch (e) {
+        throw Exception('Failed to parse response: $e');
+      }
     } else {
-      throw Exception('Login failed: ${json.decode(response.body)["error"]}');
+      throw Exception('Login failed: ${response.reasonPhrase}');
     }
   }
 

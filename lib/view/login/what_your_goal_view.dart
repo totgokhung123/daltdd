@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitness/view/login/welcome_view.dart';
 import 'package:flutter/material.dart' hide CarouselController;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/colo_extension.dart';
 import '../../common_widget/round_button.dart';
@@ -14,6 +15,21 @@ class WhatYourGoalView extends StatefulWidget {
 
 class _WhatYourGoalViewState extends State<WhatYourGoalView> {
   CarouselController buttonCarouselController = CarouselController();
+  String? userId; // Biến để lưu userId
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId(); // Gọi hàm để lấy userId
+  }
+
+  void _loadUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId =
+          prefs.getString('userId'); // Truy xuất userId từ SharedPreferences
+    });
+  }
 
   List goalArr = [
     {

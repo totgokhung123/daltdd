@@ -3,6 +3,7 @@ import 'package:fitness/common_widget/round_button.dart';
 import 'package:fitness/common_widget/round_textfield.dart';
 import 'package:fitness/view/login/complete_profile_view.dart';
 import 'package:fitness/view/login/signup_view.dart';
+// import 'package:fitness/view/login/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/ApiService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -116,10 +117,23 @@ class _LoginViewState extends State<LoginView> {
                           await prefs.setString('userId',
                               userId); // Lưu userId vào SharedPreferences
 
+                          // var weight = response['weight']; // API trả về weight
+                          // SharedPreferences prefsweight =
+                          //     await SharedPreferences.getInstance();
+                          // await prefsweight.setString('weight',
+                          //     weight); // Lưu weight vào SharedPreferences
+
+                          // var height = response['height']; // API trả về height
+                          // SharedPreferences prefsheight =
+                          //     await SharedPreferences.getInstance();
+                          // await prefsheight.setString('height',
+                          //     height); // Lưu height vào SharedPreferences
+
                           var savedUserId = prefs.getString('userId');
                           print(
                               'Saved User ID: $savedUserId'); // In ra để xác nhận
 
+                          // if (response['weight'] == "NULL") {
                           // Điều hướng sang trang khác sau khi đăng nhập thành công
                           Navigator.push(
                             context,
@@ -127,6 +141,15 @@ class _LoginViewState extends State<LoginView> {
                               builder: (context) => const CompleteProfileView(),
                             ),
                           );
+                          // } else {
+                          //   // Điều hướng sang trang khác sau khi đăng nhập thành công
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const WelcomeView(),
+                          //     ),
+                          //   );
+                          // }
                         } else {
                           // Hiển thị thông báo lỗi nếu đăng nhập không thành công
                           showDialog(

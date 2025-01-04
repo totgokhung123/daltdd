@@ -84,9 +84,9 @@ class _ExamplePageState extends State<ExamplePage> {
           width: double.maxFinite,
           height: double.maxFinite,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [ const Color(0xff9DCEFF), const Color(0xff92A3FD),
-                
+            gradient: LinearGradient(colors: [
+              const Color(0xff9DCEFF),
+              const Color(0xff92A3FD),
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
             borderRadius: BorderRadius.circular(10.0),
           ),

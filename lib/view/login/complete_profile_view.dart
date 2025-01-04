@@ -179,7 +179,6 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                           SnackBar(
                               content: Text('Profile updated successfully!')),
                         );
-
                         // Điều hướng tới màn hình tiếp theo
                         Navigator.push(
                           context,

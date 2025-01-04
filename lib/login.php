@@ -33,10 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $result->fetch_assoc();
             echo json_encode([
                 "message" => "Login successful",
-                "user" => $user // trả về thông tin người dùng
+                "userId" => $user['id'], // Trả về đúng trường userId
+                "weight" => $user['weight'],// Trả về weight để xác định Goal
+                "height" => $user['height'], // Trả về height để xác định BMI
             ]);
         } else {
-            http_response_code(401); // Unauthorized
+            http_response_code(401);
             echo json_encode(["error" => "Invalid email or password"]);
         }
     } else {

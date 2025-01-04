@@ -67,5 +67,7 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"  // Sử dụng đúng phiên bản Kotlin
+    implementation "androidx.core:core-ktx:1.9.0"  // Thêm các thư viện khác nếu cần
 }

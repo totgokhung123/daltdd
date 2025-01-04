@@ -61,6 +61,7 @@ class ApiService {
     }
   }
 
+  // Cập nhật hồ sơ người dùng
   Future<void> updateUserProfile({
     required String userId,
     required String weight,
@@ -79,6 +80,30 @@ class ApiService {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update user profile');
+    }
+  }
+
+  // Thêm một mục tiêu (goal) mới
+  Future<void> addGoal({
+    required String userId,
+    required String goalTypeId,
+    required String targetValue,
+    required String currentValue,
+    required String calories,
+  }) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2/flutter/goals.php'), // Địa chỉ API
+      body: {
+        'user_id': userId,
+        'goal_type_id': goalTypeId,
+        'target_value': targetValue,
+        'current_value': currentValue,
+        'calories': calories,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to create goal');
     }
   }
 }

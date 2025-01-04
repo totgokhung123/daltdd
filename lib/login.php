@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 "message" => "Login successful",
                 "userId" => $user['id'], // Trả về đúng trường userId
                 "weight" => $user['weight'] ?? "NULL", // Trả về weight để xác định Goal
-                "height" => $user['height'] ?? "NULL", // Trả về height để xác định BMI
             ]);
         } else {
             http_response_code(401);

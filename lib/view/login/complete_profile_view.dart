@@ -179,6 +179,22 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                           SnackBar(
                               content: Text('Profile updated successfully!')),
                         );
+
+                        var weight = txtWeight.text; // API trả về weight
+                        var height = txtHeight.text; // API trả về height
+
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+
+                        await prefs.setString('weight',
+                            weight); // Lưu weight vào SharedPreferences
+
+                        await prefs.setString('height',
+                            height); // Lưu height vào SharedPreferences
+
+                        print('Saved Weight: ${prefs.getString('weight')}');
+                        print('Saved Height: ${prefs.getString('height')}');
+
                         // Điều hướng tới màn hình tiếp theo
                         Navigator.push(
                           context,

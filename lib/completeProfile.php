@@ -60,7 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO users (id, weight, height, date_of_birth) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("isss", $userId, $weight, $height, $dateOfBirth);
         if ($stmt->execute()) {
-            echo json_encode(["message" => "User profile created successfully"]);
+            echo json_encode([
+                "message" => "User profile created successfully",
+                "weight" => $weight, // Trả về weight để xác định Goal
+                "height" => $height, // Trả về height để xác định BMI
+            ]);
         } else {
             http_response_code(500);
             echo json_encode(["error" => "Failed to create user profile"]);

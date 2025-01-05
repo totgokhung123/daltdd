@@ -5,7 +5,7 @@ import 'package:fitness/view/main_tab/select_view.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_view.dart';
-import '../photo_progress/photo_progress_view.dart';
+import '../plan_progress/plan_progress_view.dart';
 import '../profile/profile_view.dart';
 import '../workout_tracker/workout_tracker_view.dart';
 
@@ -82,12 +82,12 @@ class _MainTabViewState extends State<MainTabView> {
 
               const  SizedBox(width: 40,),
             TabButton(
-                icon: "assets/img/camera_tab.png",
-                selectIcon: "assets/img/camera_tab_select.png",
+                icon: "assets/img/plan.png",
+                selectIcon: "assets/img/plan.png",
                 isActive: selectTab == 2,
                 onTap: () {
                   selectTab = 2;
-                   currentTab = const PhotoProgressView();
+                   currentTab = const PlanProgressView(); //chỉnh sửa PhotoProGress thành PlanProgressView
                   if (mounted) {
                     setState(() {});
                   }

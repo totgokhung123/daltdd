@@ -37,20 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 // user.php (thêm đoạn này vào)
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['notifications'])) {
-    $sql = "SELECT * FROM notifications ORDER BY created_at DESC";
-    $result = $conn->query($sql);
+ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['notifications'])) {
+     $sql = "SELECT * FROM notifications ORDER BY created_at DESC";
+     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        $notifications = [];
-        while($row = $result->fetch_assoc()) {
-            $notifications[] = $row;
-        }
-        echo json_encode($notifications);
-    } else {
-        echo json_encode([]);
-    }
-}
+     if ($result->num_rows > 0) {
+         $notifications = [];
+         while($row = $result->fetch_assoc()) {
+             $notifications[] = $row;
+         }
+         echo json_encode($notifications);
+     } else {
+         echo json_encode([]);
+     }
+ }
 
 $conn->close();
 ?>

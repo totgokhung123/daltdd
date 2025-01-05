@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitness/view/login/welcome_view.dart';
 import 'package:flutter/material.dart' hide CarouselController;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/colo_extension.dart';
 import '../../common_widget/round_button.dart';
@@ -14,25 +15,40 @@ class WhatYourGoalView extends StatefulWidget {
 
 class _WhatYourGoalViewState extends State<WhatYourGoalView> {
   CarouselController buttonCarouselController = CarouselController();
+  String? userId; // Biến để lưu userId
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId(); // Gọi hàm để lấy userId
+  }
+
+  void _loadUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId =
+          prefs.getString('userId'); // Truy xuất userId từ SharedPreferences
+    });
+  }
 
   List goalArr = [
     {
       "image": "assets/img/goal_1.png",
       "title": "Improve Shape",
       "subtitle":
-          "I have a low amount of body fat\nand need / want to build more\nmuscle"
+      "I have a low amount of body fat\nand need / want to build more\nmuscle"
     },
     {
       "image": "assets/img/goal_2.png",
       "title": "Lean & Tone",
       "subtitle":
-          "I’m “skinny fat”. look thin but have\nno shape. I want to add learn\nmuscle in the right way"
+      "I’m “skinny fat”. look thin but have\nno shape. I want to add learn\nmuscle in the right way"
     },
     {
       "image": "assets/img/goal_3.png",
       "title": "Lose a Fat",
       "subtitle":
-          "I have over 20 lbs to lose. I want to\ndrop all this fat and gain muscle\nmass"
+      "I have over 20 lbs to lose. I want to\ndrop all this fat and gain muscle\nmass"
     },
   ];
 
@@ -43,12 +59,12 @@ class _WhatYourGoalViewState extends State<WhatYourGoalView> {
       backgroundColor: TColor.white,
       body: SafeArea(
           child: Stack(
-        children: [
-          Center(
-            child: CarouselSlider(
-              items: goalArr
-                  .map(
-                    (gObj) => Container(
+            children: [
+              Center(
+                child: CarouselSlider(
+                  items: goalArr
+                      .map(
+                        (gObj) => Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                             colors: TColor.primaryG,
@@ -89,61 +105,61 @@ class _WhatYourGoalViewState extends State<WhatYourGoalView> {
                               gObj["subtitle"].toString(),
                               textAlign: TextAlign.center,
                               style:
-                                  TextStyle(color: TColor.white, fontSize: 12),
+                              TextStyle(color: TColor.white, fontSize: 12),
                             ),
                           ],
                         ),
                       ),
                     ),
                   )
-                  .toList(),
-              carouselController: buttonCarouselController,
-              options: CarouselOptions(
-                autoPlay: false,
-                enlargeCenterPage: true,
-                viewportFraction: 0.7,
-                aspectRatio: 0.74,
-                initialPage: 0,
+                      .toList(),
+                  carouselController: buttonCarouselController,
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    enlargeCenterPage: true,
+                    viewportFraction: 0.7,
+                    aspectRatio: 0.74,
+                    initialPage: 0,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            width: media.width,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: media.width * 0.05,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                width: media.width,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: media.width * 0.05,
+                    ),
+                    Text(
+                      "What is your goal ?",
+                      style: TextStyle(
+                          color: TColor.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      "It will help us to choose a best\nprogram for you",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: TColor.gray, fontSize: 12),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      height: media.width * 0.05,
+                    ),
+                    RoundButton(
+                        title: "Confirm",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const WelcomeView()));
+                        }),
+                  ],
                 ),
-                Text(
-                  "What is your goal ?",
-                  style: TextStyle(
-                      color: TColor.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  "It will help us to choose a best\nprogram for you",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: TColor.gray, fontSize: 12),
-                ),
-                const Spacer(),
-                SizedBox(
-                  height: media.width * 0.05,
-                ),
-                RoundButton(
-                    title: "Confirm",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const WelcomeView()));
-                    }),
-              ],
-            ),
-          )
-        ],
-      )),
+              )
+            ],
+          )),
     );
   }
 }

@@ -869,7 +869,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               controller: _nameController,
               decoration: const InputDecoration(labelText: 'Name'),
             ),
-    TextFormField(
+            TextFormField(
               controller: _heightController,
               decoration: const InputDecoration(labelText: 'Height (cm)'),
               keyboardType: TextInputType.number,

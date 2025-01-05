@@ -7,6 +7,7 @@ import 'package:fitness/view/login/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/ApiService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -20,6 +21,94 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible =
       false; // Biến để kiểm tra trạng thái ẩn/hiện mật khẩu
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> loginWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser != null) {
+        final email = googleUser.email;
+        final name = googleUser.displayName ?? "Unknown";
+
+        // Gửi thông tin tới backend để lưu hoặc đăng nhập
+        var response = await ApiService().loginGG(
+          name: name,
+          email: email,
+          password: 'Ab123@579', // Mật khẩu mặc định hoặc ngẫu nhiên
+        );
+
+        if (response['message'] == "Login successful") {
+          // Lưu thông tin vào SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('email', email);
+          await prefs.setString('name', name);
+
+          var userId = response['userId'];
+          var weight = response['weight'];
+
+          await prefs.setString('userId', userId); // Lưu userId
+          await prefs.setString('weight', weight ?? "NULL"); // Lưu weight
+
+          // Debug
+          print('Google User: $email, $name');
+          print('User ID: $userId');
+          print('Weight: $weight');
+
+          // Điều hướng dựa trên trạng thái người dùng
+          if (weight == "NULL") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CompleteProfileView(),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WelcomeView(),
+              ),
+            );
+          }
+        } else {
+          // Xử lý lỗi nếu đăng nhập thất bại
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Error'),
+              content: Text('Failed to login: ${response['error']}'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Xử lý lỗi trong quá trình đăng nhập Google
+      print("Google Sign-In Error: $e");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text('An error occurred: $e'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +202,6 @@ class _LoginViewState extends State<LoginView> {
                         if (response['message'] == "Login successful") {
                           var userId = response['userId']; // API trả về userId
                           var weight = response['weight']; // API trả về weight
-                          var height = response['height']; // API trả về height
 
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
@@ -126,16 +214,10 @@ class _LoginViewState extends State<LoginView> {
                               weight ??
                                   "NULL"); // Lưu weight vào SharedPreferences
 
-                          await prefs.setString(
-                              'height',
-                              height ??
-                                  "NULL"); // Lưu height vào SharedPreferences
-
                           var savedUserId = prefs.getString('userId');
                           print(
                               'Saved User ID: $savedUserId'); // In ra để xác nhận
                           print('Saved Weight: ${prefs.getString('weight')}');
-                          print('Saved Height: ${prefs.getString('height')}');
 
                           if (response['weight'] == "NULL") {
                             // Điều hướng sang trang khác sau khi đăng nhập thành công
@@ -220,7 +302,9 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        await loginWithGoogle(); // Gọi hàm đăng nhập với google
+                      },
                       child: Container(
                         width: 50,
                         height: 50,

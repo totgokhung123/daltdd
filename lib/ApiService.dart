@@ -16,6 +16,29 @@ class ApiService {
     }
   }
 
+  // Đăng nhập người dùng bằng google
+  Future<Map<String, dynamic>> loginGG({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2/flutter/google.php'),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
+        'name': name,
+        'email': email,
+        'password': password,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to login with Google');
+    }
+  }
+
   // Đăng nhập người dùng
   Future<Map<String, dynamic>> loginUser({
     required String email,

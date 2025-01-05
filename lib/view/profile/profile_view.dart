@@ -5,6 +5,7 @@ import '../../common_widget/round_button.dart';
 import '../../common_widget/setting_row.dart';
 import '../../common_widget/title_subtitle_cell.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:fitness/view/login/login_view.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -35,6 +36,7 @@ class _ProfileViewState extends State<ProfileView> {
     {"image": "assets/img/p_contact.png", "name": "Contact Us", "tag": "5"},
     {"image": "assets/img/p_privacy.png", "name": "Privacy Policy", "tag": "6"},
     {"image": "assets/img/p_setting.png", "name": "Setting", "tag": "7"},
+    {"image": "assets/img/p_logout.png", "name": "Logout", "tag": "8"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -273,11 +275,10 @@ class _ProfileViewState extends State<ProfileView> {
                                     Positioned(
                                         left: 10.0,
                                         right: 10.0,
-                                        
                                         height: 30.0,
                                         child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                             gradient: LinearGradient(
+                                            gradient: LinearGradient(
                                                 colors: TColor.secondaryG),
                                             borderRadius:
                                                 const BorderRadius.all(
@@ -349,7 +350,18 @@ class _ProfileViewState extends State<ProfileView> {
                         return SettingRow(
                           icon: iObj["image"].toString(),
                           title: iObj["name"].toString(),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (iObj["tag"] == "8") {
+                              // Điều hướng đến trang Login khi tag == 8 (Logout)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      LoginView(), // Đổi thành LoginView của bạn
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                     )

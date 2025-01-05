@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' hide CarouselController;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/colo_extension.dart';
-import '../../common_widget/round_button.dart';
+// import '../../common_widget/round_button.dart';
 import 'package:fitness/ApiService.dart';
 
 class WhatYourGoalView extends StatefulWidget {
@@ -295,6 +295,27 @@ class _WhatYourGoalViewState extends State<WhatYourGoalView> {
                   SizedBox(
                     height: media.width * 0.05,
                   ),
+                  // RoundButton(
+                  //   title: "Confirm",
+                  //   onPressed: () async {
+                  //     // Lấy giá trị mục tiêu từ biến targetValue
+                  //     String goalType =
+                  //         "Maintenance"; // Ví dụ, nếu bạn muốn lưu mục tiêu Maintenance mặc định
+                  //     if (targetValue.isNotEmpty) {
+                  //       // Nếu người dùng nhập cân nặng mục tiêu, gọi hàm _saveGoal
+                  //       await _saveGoal(goalType, targetValue);
+                  //     } else {
+                  //       // Nếu không có mục tiêu nhập, chỉ lưu mục tiêu không có giá trị mục tiêu
+                  //       await _saveGoal(goalType, null);
+                  //     }
+                  //     // Chuyển hướng đến màn hình chào mừng sau khi lưu thành công
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => const WelcomeView()),
+                  //     );
+                  //   },
+                  // ),
                 ],
               ),
             ),

@@ -48,6 +48,7 @@ dependencies:
   http: ^1.2.2
   provider: ^6.1.2
   shared_preferences: ^2.3.5
+  google_sign_in: ^6.2.2
 
 dependency_overrides: 
   intl: ^0.18.1

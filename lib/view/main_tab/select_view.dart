@@ -1,5 +1,6 @@
 import 'package:fitness/common_widget/round_button.dart';
 import 'package:fitness/view/meal_planner/meal_planner_view.dart';
+import 'package:fitness/view/workout_tracker/WorkoutListPage.dart';
 import 'package:fitness/view/meal_planner/meal_schedule_view.dart';
 import 'package:fitness/view/workout_tracker/workout_tracker_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class SelectView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WorkoutTrackerView(),
+                      builder: (context) => WorkoutListPage(),
                     ),
                   );
                 }),
@@ -42,10 +43,10 @@ class SelectView extends StatelessWidget {
                     ),
                   );
                 }),
-
-                const SizedBox(height: 15,),
-
-                  RoundButton(
+            const SizedBox(
+              height: 15,
+            ),
+            RoundButton(
                 title: "Sleep Tracker",
                 onPressed: () {
                   Navigator.push(

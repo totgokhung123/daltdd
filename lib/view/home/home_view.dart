@@ -1,6 +1,7 @@
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:fitness/common_widget/round_button.dart';
 import 'package:fitness/common_widget/workout_row.dart';
+import 'package:fitness/view/profile/profile_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
@@ -126,16 +127,33 @@ class _HomeViewState extends State<HomeView> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Welcome Back,",
-                          style: TextStyle(color: TColor.gray, fontSize: 12),
-                        ),
-                        Text(
-                          "Stefani Wong",
-                          style: TextStyle(
-                              color: TColor.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
+                        // Text(
+                        //   "Welcome Back,",
+                        //   style: TextStyle(color: TColor.gray, fontSize: 12),
+                        // ),
+                        // Text(
+                        //   "Stefani Wong",
+                        //   style: TextStyle(
+                        //       color: TColor.black,
+                        //       fontSize: 20,
+                        //       fontWeight: FontWeight.w700),
+                        // ),
+
+                        //thay đổi thành icon user đến đường dẫn chỉnh profile_user
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileView(), // Navigates to profile page
+                              ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.account_circle,
+                            size: 40, // User icon size
+                            color: Colors.black, // Change icon color as needed
+                          ),
                         ),
                       ],
                     ),
@@ -144,7 +162,7 @@ class _HomeViewState extends State<HomeView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const NotificationView(),
+                              builder: (context) => NotificationView(),
                             ),
                           );
                         },

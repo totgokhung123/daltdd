@@ -30,6 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  #  font_awesome_flutter: ^10.2.1 #icon
+  #  url_launcher: ^6.1.7 #thư viện đường link
+  url_launcher: ^6.0.20
+  font_awesome_flutter: ^10.1.0
+
+
+
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -51,9 +61,10 @@ dependencies:
   collection: ^1.17.0
   calendar_agenda:
     path: dev_lib/calendar_agenda/
+  provider: ^6.1.2
+  shared_preferences: ^2.3.5  # Cập nhật phiên bản mới nhất từ pub.dev
 
-
-dependency_overrides: 
+dependency_overrides:
   intl: ^0.18.1
 
 dev_dependencies:

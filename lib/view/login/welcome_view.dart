@@ -26,10 +26,10 @@ class _WelcomeViewState extends State<WelcomeView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-SizedBox(
+              SizedBox(
                 height: media.width * 0.1,
               ),
-               Image.asset(
+              Image.asset(
                 "assets/img/welcome.png",
                 width: media.width * 0.75,
                 fit: BoxFit.fitWidth,
@@ -49,9 +49,9 @@ SizedBox(
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColor.gray, fontSize: 12),
               ),
-             const Spacer(),
+              const Spacer(),
 
-               RoundButton(
+              RoundButton(
                   title: "Go To Home",
                   onPressed: () {
                     Navigator.push(
@@ -59,7 +59,7 @@ SizedBox(
                         MaterialPageRoute(
                             builder: (context) => const MainTabView()));
                   }),
-               
+
             ],
           ),
         ),

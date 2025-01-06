@@ -41,17 +41,17 @@ dependencies:
   dotted_dashed_line: ^0.0.3
   simple_circular_progress_bar: ^1.0.2
   animated_toggle_switch: ^0.6.2
-  http: ^1.2.2
   image_picker: ^0.8.7+5
   barcode_scan2: ^4.2.0
   #  nutrition_ai: ^3.2.3
   #  camera: ^0.10.0+1
+  intl: ^0.18.1
+  http: ^1.2.2
   readmore: ^2.1.0
   collection: ^1.17.0
   calendar_agenda:
     path: dev_lib/calendar_agenda/
-  intl: ^0.18.1
-  http: ^1.2.2
+
 
 dependency_overrides: 
   intl: ^0.18.1

@@ -724,7 +724,7 @@ class _ProfileViewState extends State<ProfileView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const WorkoutProgressView(), // Trang Workout Progress
+                                  builder: (context) => WorkoutProgressView(userId: '1',), // Trang Workout Progress
                                 ),
                               );
                             }

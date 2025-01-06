@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import '../../common/colo_extension.dart';
+import 'AddExerciseScreen.dart';
 import 'activity_tracker_view.dart';
 import 'finished_workout_view.dart';
 import 'notification_view.dart';
@@ -921,47 +922,67 @@ class _HomeViewState extends State<HomeView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Latest Workout",
-                      style: TextStyle(
-                          color: TColor.black,
+                    ElevatedButton(
+                      onPressed: () {
+                        // Điều hướng đến màn hình thêm mới Exercise Workout
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddExerciseScreen()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: TColor.primaryColor1, // Màu chính của nút
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // Bo tròn góc nút
+                        ),
+                      ),
+                      child: Text(
+                        "Add New Exercise Workout",
+                        style: TextStyle(
+                          color: Colors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // Hành động "See More" (nếu cần giữ lại)
+                      },
                       child: Text(
                         "See More",
                         style: TextStyle(
-                            color: TColor.gray,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                          color: TColor.gray,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-                ListView.builder(
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: lastWorkoutArr.length,
-                    itemBuilder: (context, index) {
-                      var wObj = lastWorkoutArr[index] as Map? ?? {};
-                      return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const FinishedWorkoutView(),
-                              ),
-                            );
-                          },
-                          child: WorkoutRow(wObj: wObj));
-                    }),
-                SizedBox(
-                  height: media.width * 0.1,
-                ),
+
+                // ListView.builder(
+                //     padding: EdgeInsets.zero,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     shrinkWrap: true,
+                //     itemCount: lastWorkoutArr.length,
+                //     itemBuilder: (context, index) {
+                //       var wObj = lastWorkoutArr[index] as Map? ?? {};
+                //       return InkWell(
+                //           onTap: () {
+                //             Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                 builder: (context) =>
+                //                     const FinishedWorkoutView(),
+                //               ),
+                //             );
+                //           },
+                //           child: WorkoutRow(wObj: wObj));
+                //     }),
+                // SizedBox(
+                //   height: media.width * 0.1,
+                // ),
               ],
             ),
           ),

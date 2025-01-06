@@ -359,7 +359,6 @@ class _MealScheduleViewState extends State<MealScheduleView> {
                                     ),
                                   ),
                                 );
-
                                 // Kiểm tra nếu có món ăn mới được thêm
                                 if (result == true) {
                                   // Gọi lại fetchMeals() để cập nhật giao diện

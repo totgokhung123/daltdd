@@ -1,3 +1,6 @@
+import 'package:fitness/view/profile/AchievementView.dart';
+import 'package:fitness/view/profile/ActivityHistoryView.dart';
+import 'package:fitness/view/profile/WorkoutProgressView.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/colo_extension.dart';

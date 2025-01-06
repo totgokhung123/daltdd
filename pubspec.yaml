@@ -36,6 +36,8 @@ dependencies:
   #  url_launcher: ^6.1.7 #thư viện đường link
   url_launcher: ^6.0.20
   font_awesome_flutter: ^10.1.0
+  percent_indicator: ^4.2.2
+  google_mlkit_barcode_scanning: ^0.13.0
 
 
 

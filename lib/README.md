@@ -1,0 +1,8 @@
+![Xem Ảnh](image.png)
+
+TẤT CẢ CÁC FILE.PHP ĐỀU NẰM TRONG THƯ MỤC WWW CỦA LARAGON 
+(VUI LÒNG TẠO THƯ MỤC TÊN FLUTTER ĐỂ CHỨA TẤT CẢ
+HOẶC ĐỔI ĐƯỜNG DẪN TRONG APISERVICE.DART)
+
+
+XEM XOG CÓ THỂ XÓA CHO ĐỞ RỐI.

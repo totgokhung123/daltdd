@@ -61,6 +61,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/home_tab.png",
                 selectIcon: "assets/img/home_tab_select.png",
                 isActive: selectTab == 0,
+                title: "Dashboard",
                 onTap: () {
                   selectTab = 0;
                   currentTab = const HomeView();
@@ -72,6 +73,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/activity_tab.png",
                 selectIcon: "assets/img/activity_tab_select.png",
                 isActive: selectTab == 1,
+                title: "Log food",
                 onTap: () {
                   selectTab = 1;
                   currentTab = const SelectView();
@@ -85,6 +87,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/camera_tab.png",
                 selectIcon: "assets/img/camera_tab_select.png",
                 isActive: selectTab == 2,
+                title: "Plan",
                 onTap: () {
                   selectTab = 2;
                    currentTab = const PhotoProgressView();
@@ -96,6 +99,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/profile_tab.png",
                 selectIcon: "assets/img/profile_tab_select.png",
                 isActive: selectTab == 3,
+                title: "...more",
                 onTap: () {
                   selectTab = 3;
                    currentTab = const ProfileView();

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fitness/ApiService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -22,25 +23,51 @@ class _LoginViewState extends State<LoginView> {
   bool isPasswordVisible =
       false; // Biến để kiểm tra trạng thái ẩn/hiện mật khẩu
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> loginWithGoogle() async {
+  Future<User?> _signInWithGoogle() async {
     try {
+      // Đăng nhập Google
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser != null) {
-        final email = googleUser.email;
-        final name = googleUser.displayName ?? "Unknown";
+      if (googleUser == null) return null;
+
+      // Lấy thông tin chứng chỉ từ Google
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Tạo credential từ chứng chỉ
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Đăng nhập Firebase với credential
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      return userCredential.user;
+    } catch (e) {
+      print("Lỗi khi đăng nhập Google: $e");
+      return null;
+    }
+  }
+
+  Future<void> loginWithGoogle(User? user) async {
+    try {
+      if (user != null) {
+        final email = user.email;
+        final name = user.displayName ?? "Unknown";
 
         // Gửi thông tin tới backend để lưu hoặc đăng nhập
         var response = await ApiService().loginGG(
           name: name,
-          email: email,
+          email: email.toString(),
           password: 'Ab123@579', // Mật khẩu mặc định hoặc ngẫu nhiên
         );
 
         if (response['message'] == "Login successful") {
           // Lưu thông tin vào SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('email', email);
+          await prefs.setString('email', email.toString());
           await prefs.setString('name', name);
 
           var userId = response['userId'];
@@ -303,7 +330,10 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        await loginWithGoogle(); // Gọi hàm đăng nhập với google
+                        User? user =
+                            await _signInWithGoogle(); // Gọi hàm đăng nhập với google
+                        await loginWithGoogle(
+                            user); // Gọi hàm lưu thông tin đăng nhập với google
                       },
                       child: Container(
                         width: 50,

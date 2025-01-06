@@ -49,6 +49,8 @@ dependencies:
   provider: ^6.1.2
   shared_preferences: ^2.3.5
   google_sign_in: ^6.2.2
+  firebase_core: ^3.9.0
+  firebase_auth: ^5.3.4
 
 dependency_overrides: 
   intl: ^0.18.1

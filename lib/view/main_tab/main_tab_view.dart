@@ -73,7 +73,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/activity_tab.png",
                 selectIcon: "assets/img/activity_tab_select.png",
                 isActive: selectTab == 1,
-                title: "Log food",
+                title: "Log Goal",
                 onTap: () {
                   selectTab = 1;
                   currentTab = const SelectView();

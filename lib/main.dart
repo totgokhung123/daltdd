@@ -3,6 +3,7 @@
 // import 'package:fitness/view/meal_planner/meal_planner_view.dart';
 // import 'package:fitness/view/on_boarding/started_view.dart';
 // import 'package:fitness/UserListPage.dart';
+import 'package:fitness/view/main_tab/main_tab_view.dart';
 import 'package:fitness/view/meal_planner/meal_schedule_view.dart';
 import 'package:flutter/material.dart' hide CarouselController;
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         primaryColor: TColor.primaryColor1,
         fontFamily: "Poppins"
       ),
-      home: const MealScheduleView(),
+      home: const MainTabView(),
     );
   }
 }

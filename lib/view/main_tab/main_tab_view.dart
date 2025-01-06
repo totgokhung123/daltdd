@@ -61,6 +61,7 @@ class _MainTabViewState extends State<MainTabView> {
                 icon: "assets/img/home_tab.png",
                 selectIcon: "assets/img/home_tab_select.png",
                 isActive: selectTab == 0,
+                title: "Dashboard",
                 onTap: () {
                   selectTab = 0;
                   currentTab = const HomeView();
@@ -68,10 +69,12 @@ class _MainTabViewState extends State<MainTabView> {
                     setState(() {});
                   }
                 }),
+
             TabButton(
                 icon: "assets/img/activity_tab.png",
                 selectIcon: "assets/img/activity_tab_select.png",
                 isActive: selectTab == 1,
+                title: "Log Goal",
                 onTap: () {
                   selectTab = 1;
                   currentTab = const SelectView();

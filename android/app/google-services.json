@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "88983325238",
+    "project_id": "doan-49978",
+    "storage_bucket": "doan-49978.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88983325238:android:63cd9e9cb53d2f6494e697",
+        "android_client_info": {
+          "package_name": "com.codeforany.fitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88983325238-k11mn7664mdo6fnuq5rtctbl8j30hpsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL8qZuOLzAZsoyxFnBwQGUhf7HOb1DydM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88983325238-k11mn7664mdo6fnuq5rtctbl8j30hpsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

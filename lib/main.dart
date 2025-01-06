@@ -6,18 +6,18 @@ import 'package:flutter/material.dart' hide CarouselController;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fitness/view/profile/SettingView.dart';  // Đảm bảo đã import đúng file SettingView
 import 'common/colo_extension.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Khởi tạo Firebase
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // @override
-  // _MyAppState createState() => _MyAppState();
 
-
-// This widget is the root of your application.
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

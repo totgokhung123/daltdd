@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -49,9 +40,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBlRqnsjWKvFjixQnSdKGy1pPWtqPU6_zw',
+    appId: '1:88983325238:web:de7b37a5e7170e0f94e697',
+    messagingSenderId: '88983325238',
+    projectId: 'doan-49978',
+    authDomain: 'doan-49978.firebaseapp.com',
+    storageBucket: 'doan-49978.firebasestorage.app',
+    measurementId: 'G-6BN5XM95WB',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCL8qZuOLzAZsoyxFnBwQGUhf7HOb1DydM',
-    appId: '1:88983325238:android:63cd9e9cb53d2f6494e697',
+    appId: '1:88983325238:android:f46df3359d1a853b94e697',
     messagingSenderId: '88983325238',
     projectId: 'doan-49978',
     storageBucket: 'doan-49978.firebasestorage.app',
@@ -63,7 +64,29 @@ class DefaultFirebaseOptions {
     messagingSenderId: '88983325238',
     projectId: 'doan-49978',
     storageBucket: 'doan-49978.firebasestorage.app',
+    androidClientId: '88983325238-3eivcmlmg5f8qmubcjb7tkenfgbm6to6.apps.googleusercontent.com',
     iosClientId: '88983325238-9v1nc9qvpg75c7389get9j1d6gduu3r7.apps.googleusercontent.com',
     iosBundleId: 'com.codeforany.fitness',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyADG83g1Iz-OApGzf8gnySe-fHJbHdUPr4',
+    appId: '1:88983325238:ios:1277b79dd990243a94e697',
+    messagingSenderId: '88983325238',
+    projectId: 'doan-49978',
+    storageBucket: 'doan-49978.firebasestorage.app',
+    androidClientId: '88983325238-3eivcmlmg5f8qmubcjb7tkenfgbm6to6.apps.googleusercontent.com',
+    iosClientId: '88983325238-ro8eibfotl70fkv2vn6f3lari33ginuh.apps.googleusercontent.com',
+    iosBundleId: 'com.example.fitness',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBlRqnsjWKvFjixQnSdKGy1pPWtqPU6_zw',
+    appId: '1:88983325238:web:de03b6e4f558b31294e697',
+    messagingSenderId: '88983325238',
+    projectId: 'doan-49978',
+    authDomain: 'doan-49978.firebaseapp.com',
+    storageBucket: 'doan-49978.firebasestorage.app',
+    measurementId: 'G-YSP8QVP0QY',
   );
 }

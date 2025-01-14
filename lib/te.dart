@@ -3,6 +3,7 @@ import 'package:fitness/ApiService.dart'; // Đảm bảo import dịch vụ API
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:barcode_scan2/barcode_scan2.dart';
+
 class te extends StatefulWidget {
   final String userId;
   final int mealTypeId;
@@ -34,7 +35,8 @@ class _teState extends State<te> {
   }
 
   Future<void> fetchFoods() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2/food.php'));
+    final response = await http
+        .get(Uri.parse('https://dae2-171-247-159-64.ngrok-free.app/food.php'));
     if (response.statusCode == 200) {
       setState(() {
         foods = List<Map<String, dynamic>>.from(jsonDecode(response.body));
@@ -47,6 +49,7 @@ class _teState extends State<te> {
       print('Failed to fetch foods');
     }
   }
+
   /// Quét mã vạch
   Future<void> _scanBarcode() async {
     try {
@@ -94,7 +97,7 @@ class _teState extends State<te> {
       } else {
         setState(() {
           _errorMessage =
-          "Không thể lấy dữ liệu. Mã lỗi: ${response.statusCode}";
+              "Không thể lấy dữ liệu. Mã lỗi: ${response.statusCode}";
         });
       }
     } catch (e) {
@@ -107,6 +110,7 @@ class _teState extends State<te> {
       });
     }
   }
+
   void addFood() async {
     if (selectedFood == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -128,7 +132,7 @@ class _teState extends State<te> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Food added successfully')),
       );
-      Navigator.pop(context,true); // Quay lại trang trước
+      Navigator.pop(context, true); // Quay lại trang trước
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to add food: $e')),
@@ -151,57 +155,62 @@ class _teState extends State<te> {
       body: foods.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: foods.length,
-              itemBuilder: (context, index) {
-                final food = foods[index];
-                final isSelected = selectedFood != null && selectedFood!['id'] == food['id'];
-                return ListTile(
-                  title: Text(food['name']),
-                  subtitle: Text('Calories: ${food['calories_per_unit']}' + '| protein: ${food['protein']}'+ '| carbs: ${food['carbs']}'+ '| fat: ${food['fat']}'),
-                  trailing: Checkbox(
-                    value: isSelected,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedFood = value == true ? food : null;
-                      });
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: foods.length,
+                    itemBuilder: (context, index) {
+                      final food = foods[index];
+                      final isSelected = selectedFood != null &&
+                          selectedFood!['id'] == food['id'];
+                      return ListTile(
+                        title: Text(food['name']),
+                        subtitle: Text(
+                            'Calories: ${food['calories_per_unit']}' +
+                                '| protein: ${food['protein']}' +
+                                '| carbs: ${food['carbs']}' +
+                                '| fat: ${food['fat']}'),
+                        trailing: Checkbox(
+                          value: isSelected,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedFood = value == true ? food : null;
+                            });
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            selectedFood = food;
+                          });
+                        },
+                      );
                     },
                   ),
-                  onTap: () {
-                    setState(() {
-                      selectedFood = food;
-                    });
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text('Quantity: $quantity'),
-                Expanded(
-                  child: Slider(
-                    value: quantity.toDouble(),
-                    min: 1,
-                    max: 10,
-                    divisions: 9,
-                    label: quantity.toString(),
-                    onChanged: (value) {
-                      setState(() {
-                        quantity = value.toInt();
-                      });
-                    },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Quantity: $quantity'),
+                      Expanded(
+                        child: Slider(
+                          value: quantity.toDouble(),
+                          min: 1,
+                          max: 10,
+                          divisions: 9,
+                          label: quantity.toString(),
+                          onChanged: (value) {
+                            setState(() {
+                              quantity = value.toInt();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

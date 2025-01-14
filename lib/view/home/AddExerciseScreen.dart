@@ -13,7 +13,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController muscleGroupController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
-  final TextEditingController caloriesBurnedController = TextEditingController();
+  final TextEditingController caloriesBurnedController =
+      TextEditingController();
 
   String difficulty = 'beginner';
   String? selectedWorkout; // Chọn workout từ dropdown
@@ -21,7 +22,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   // Lấy danh sách workout từ API
   Future<void> fetchWorkouts() async {
-    final url = Uri.parse('http://10.0.2.2/get_workouts.php'); // API lấy danh sách workouts
+    final url = Uri.parse(
+        'https://dae2-171-247-159-64.ngrok-free.app/get_workouts.php'); // API lấy danh sách workouts
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -55,7 +57,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       return;
     }
 
-    final url = Uri.parse('http://10.0.2.2/add_exercise.php');
+    final url = Uri.parse(
+        'https://dae2-171-247-159-64.ngrok-free.app/add_exercise.php');
     final response = await http.post(url, body: {
       'name': name,
       'description': description,
@@ -130,9 +133,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 decoration: InputDecoration(labelText: 'Mức độ khó'),
                 items: ['beginner', 'intermediate', 'advanced']
                     .map((level) => DropdownMenuItem(
-                  value: level,
-                  child: Text(level),
-                ))
+                          value: level,
+                          child: Text(level),
+                        ))
                     .toList(),
                 onChanged: (value) => setState(() => difficulty = value!),
               ),
@@ -185,9 +188,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 },
                 items: workouts
                     .map((workout) => DropdownMenuItem(
-                  value: workout,
-                  child: Text(workout),
-                ))
+                          value: workout,
+                          child: Text(workout),
+                        ))
                     .toList(),
               ),
               SizedBox(height: 16),

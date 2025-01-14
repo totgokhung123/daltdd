@@ -32,7 +32,8 @@ class _scantestState extends State<scantest> {
   }
 
   Future<void> fetchFoods() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2/food.php'));
+    final response = await http
+        .get(Uri.parse('https://d1e9-203-205-32-22.ngrok-free.app/food.php'));
     if (response.statusCode == 200) {
       setState(() {
         foods = List<Map<String, dynamic>>.from(jsonDecode(response.body));
@@ -55,7 +56,8 @@ class _scantestState extends State<scantest> {
       if (barcode.isNotEmpty) {
         // Gửi yêu cầu xử lý mã vạch đến server
         final response = await http.post(
-          Uri.parse('http://10.0.2.2/handle_barcode.php'),
+          Uri.parse(
+              'https://d1e9-203-205-32-22.ngrok-free.app/handle_barcode.php'),
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
             'barcode': barcode,
@@ -70,12 +72,13 @@ class _scantestState extends State<scantest> {
             // Mã vạch đã tồn tại -> Chọn thực phẩm này
             setState(() {
               selectedFood = foods.firstWhere(
-                    (food) => food['id'] == data['food_id'],
+                (food) => food['id'] == data['food_id'],
               );
             });
 
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Food selected: ${selectedFood!['name']}')),
+              SnackBar(
+                  content: Text('Food selected: ${selectedFood!['name']}')),
             );
           } else if (data['status'] == 'added') {
             // Mã vạch mới -> Thêm thực phẩm mới vào danh sách
@@ -85,7 +88,8 @@ class _scantestState extends State<scantest> {
             });
 
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('New food added: ${selectedFood!['name']}')),
+              SnackBar(
+                  content: Text('New food added: ${selectedFood!['name']}')),
             );
           }
         } else {
@@ -122,7 +126,7 @@ class _scantestState extends State<scantest> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Food added successfully')),
       );
-      Navigator.pop(context, true); // Quay lại trang trước
+      Navigator.pop(context, true); 
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to add food: $e')),
@@ -145,63 +149,64 @@ class _scantestState extends State<scantest> {
       body: foods.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: foods.length,
-              itemBuilder: (context, index) {
-                final food = foods[index];
-                final isSelected = selectedFood != null && selectedFood!['id'] == food['id'];
-                return ListTile(
-                  title: Text(food['name']),
-                  subtitle: Text(
-                      'Calories: ${food['calories_per_unit']} | Protein: ${food['protein']} | Carbs: ${food['carbs']} | Fat: ${food['fat']}'),
-                  trailing: Checkbox(
-                    value: isSelected,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedFood = value == true ? food : null;
-                      });
-                    },
-                  ),
-                  onTap: () {
-                    setState(() {
-                      selectedFood = food;
-                    });
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
               children: [
-                Text('Quantity: $quantity'),
                 Expanded(
-                  child: Slider(
-                    value: quantity.toDouble(),
-                    min: 1,
-                    max: 10,
-                    divisions: 9,
-                    label: quantity.toString(),
-                    onChanged: (value) {
-                      setState(() {
-                        quantity = value.toInt();
-                      });
+                  child: ListView.builder(
+                    itemCount: foods.length,
+                    itemBuilder: (context, index) {
+                      final food = foods[index];
+                      final isSelected = selectedFood != null &&
+                          selectedFood!['id'] == food['id'];
+                      return ListTile(
+                        title: Text(food['name']),
+                        subtitle: Text(
+                            'Calories: ${food['calories_per_unit']} | Protein: ${food['protein']} | Carbs: ${food['carbs']} | Fat: ${food['fat']}'),
+                        trailing: Checkbox(
+                          value: isSelected,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedFood = value == true ? food : null;
+                            });
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            selectedFood = food;
+                          });
+                        },
+                      );
                     },
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Quantity: $quantity'),
+                      Expanded(
+                        child: Slider(
+                          value: quantity.toDouble(),
+                          min: 1,
+                          max: 10,
+                          divisions: 9,
+                          label: quantity.toString(),
+                          onChanged: (value) {
+                            setState(() {
+                              quantity = value.toInt();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: _scanBarcode,
+                  icon: Icon(Icons.qr_code_scanner),
+                  label: Text("Scan Barcode"),
+                ),
               ],
             ),
-          ),
-          ElevatedButton.icon(
-            onPressed: _scanBarcode,
-            icon: Icon(Icons.qr_code_scanner),
-            label: Text("Scan Barcode"),
-          ),
-        ],
-      ),
     );
   }
 }

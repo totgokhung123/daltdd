@@ -95,7 +95,6 @@ import '../../common_widget/notification_row.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class NotificationView extends StatefulWidget {
   const NotificationView({super.key});
 
@@ -113,7 +112,8 @@ class _NotificationViewState extends State<NotificationView> {
   }
 
   Future<void> fetchNotifications() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2/flutter/user.php?notifications=true'));
+    final response = await http.get(Uri.parse(
+        'https://dae2-171-247-159-64.ngrok-free.app/flutter/user.php?notifications=true'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -135,12 +135,13 @@ class _NotificationViewState extends State<NotificationView> {
             var nObj = notificationArr[index] as Map? ?? {};
             return NotificationRow(nObj: nObj);
           }),
-          separatorBuilder: (context, index){
-            return Divider(color: TColor.gray.withOpacity(0.5), height: 1, );
+          separatorBuilder: (context, index) {
+            return Divider(
+              color: TColor.gray.withOpacity(0.5),
+              height: 1,
+            );
           },
           itemCount: notificationArr.length),
     );
   }
 }
-
-

@@ -3,10 +3,14 @@ import 'dart:ffi';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String apiUrl = 'http://10.0.2.2/api.php';
-  static const String foodUrl = 'http://10.0.2.2/food.php';
-  static const String type_mealUrl = 'http://10.0.2.2/type_meal.php';
-  static const String baseUrl = 'http://10.0.2.2'; // Địa chỉ API
+  static const String apiUrl =
+      'https://d1e9-203-205-32-22.ngrok-free.app/api.php';
+  static const String foodUrl =
+      'https://d1e9-203-205-32-22.ngrok-free.app/food.php';
+  static const String type_mealUrl =
+      'https://d1e9-203-205-32-22.ngrok-free.app/type_meal.php';
+  static const String baseUrl =
+      'https://d1e9-203-205-32-22.ngrok-free.app'; // Địa chỉ API
 
   // Hàm xử lý response chung
   dynamic _processResponse(http.Response response) {
@@ -16,10 +20,11 @@ class ApiService {
       throw Exception('Error: ${response.statusCode} - ${response.body}');
     }
   }
+
   // Lấy danh sách người dùng từ API
   Future<List<dynamic>> fetchUsers() async {
-    final response =
-    await http.get(Uri.parse('http://10.0.2.2/flutter/user.php'));
+    final response = await http.get(Uri.parse(
+        'https://d1e9-203-205-32-22.ngrok-free.app/flutter/user.php'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -35,7 +40,7 @@ class ApiService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/flutter/google.php'),
+      Uri.parse('https://d1e9-203-205-32-22.ngrok-free.app/flutter/google.php'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'name': name,
@@ -57,7 +62,7 @@ class ApiService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/flutter/login.php'),
+      Uri.parse('https://d1e9-203-205-32-22.ngrok-free.app/flutter/login.php'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'email': email,
@@ -83,7 +88,7 @@ class ApiService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/flutter/user.php'),
+      Uri.parse('https://d1e9-203-205-32-22.ngrok-free.app/flutter/user.php'),
       body: {
         'name': name,
         'email': email,
@@ -107,6 +112,7 @@ class ApiService {
     );
     return response.statusCode == 200;
   }
+
   Future<List<dynamic>> fetchFood() async {
     final response = await http.get(Uri.parse(foodUrl));
 
@@ -116,6 +122,7 @@ class ApiService {
       throw Exception('Failed to load users');
     }
   }
+
   Future<List<dynamic>> fetchTypeMeal() async {
     final response = await http.get(Uri.parse('$type_mealUrl?type_meal=true'));
 
@@ -125,9 +132,11 @@ class ApiService {
       throw Exception('Failed to load meal types');
     }
   }
+
   Future<List<dynamic>> fetchMealSchedule(int userId) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2/meal_schedule.php?user_id=$userId'),
+      Uri.parse(
+          'https://d1e9-203-205-32-22.ngrok-free.app/meal_schedule.php?user_id=$userId'),
     );
 
     if (response.statusCode == 200) {
@@ -136,6 +145,7 @@ class ApiService {
       throw Exception('Failed to load meal schedule');
     }
   }
+
   Future<void> addMealSchedule({
     required String user_id,
     required String type_meal_id,
@@ -145,7 +155,7 @@ class ApiService {
     required String calories_total,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/food.php'),
+      Uri.parse('https://d1e9-203-205-32-22.ngrok-free.app/food.php'),
       body: {
         'user_id': user_id.toString(),
         'type_meal_id': type_meal_id.toString(),
@@ -161,14 +171,17 @@ class ApiService {
       throw Exception('Failed to add food');
     }
   }
+
   Future<Map<String, dynamic>> fetchFoodById(int foodId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2/?food_id=$foodId'));
+    final response = await http.get(Uri.parse(
+        'https://d1e9-203-205-32-22.ngrok-free.app/?food_id=$foodId'));
     if (response.statusCode == 200) {
       return json.decode(response.body) as Map<String, dynamic>;
     } else {
       throw Exception('Failed to fetch food details');
     }
   }
+
   Future<void> updateUserProfile({
     required String userId,
     required String weight,
@@ -176,7 +189,8 @@ class ApiService {
     required String dateOfBirth,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/flutter/completeProfile.php'),
+      Uri.parse(
+          'https://d1e9-203-205-32-22.ngrok-free.app/flutter/completeProfile.php'),
       body: {
         'user_id': userId,
         'weight': weight,
@@ -189,8 +203,10 @@ class ApiService {
       throw Exception('Failed to update user profile');
     }
   }
+
   // Lấy thông tin tiến độ tập luyện
-  Future<Map<String, dynamic>> getWorkoutProgress({required String userId}) async {
+  Future<Map<String, dynamic>> getWorkoutProgress(
+      {required String userId}) async {
     final url = Uri.parse('$baseUrl/progress.php?user_id=1');
     final response = await http.get(url);
     return _processResponse(response);
@@ -220,8 +236,8 @@ class ApiService {
 
   // Lấy danh sách kế hoạch tập luyện theo trạng thái
   Future<List<dynamic>> fetchPlans(String userId, String status) async {
-    final response = await http.get(
-        Uri.parse('$baseUrl/progress.php?user_id=$userId&status=$status'));
+    final response = await http
+        .get(Uri.parse('$baseUrl/progress.php?user_id=$userId&status=$status'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -237,11 +253,10 @@ class ApiService {
     }
   }
 
-
   // Lấy chi tiết của kế hoạch tập luyện
   Future<List<dynamic>> fetchPlanDetails(int planId) async {
-    final response = await http.get(
-        Uri.parse('$baseUrl/plan_details.php?plan_id=$planId'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/plan_details.php?plan_id=$planId'));
 
     if (response.statusCode == 200) {
       return _processResponse(response);
@@ -259,7 +274,8 @@ class ApiService {
     required int duration,
     required int caloriesBurned,
   }) async {
-    final url = Uri.parse('$baseUrl/add_exercise.php'); // Địa chỉ endpoint để thêm bài tập
+    final url = Uri.parse(
+        '$baseUrl/add_exercise.php'); // Địa chỉ endpoint để thêm bài tập
     final response = await http.post(
       url,
       body: {
@@ -273,6 +289,7 @@ class ApiService {
     );
     _processResponse(response); // Xử lý phản hồi từ server
   }
+
   // Thêm một mục tiêu (goal) mới
   Future<void> addGoal({
     required String userId,
@@ -282,7 +299,8 @@ class ApiService {
     required String calories,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/flutter/goals.php'), // Địa chỉ API
+      Uri.parse(
+          'https://d1e9-203-205-32-22.ngrok-free.app/flutter/goals.php'), // Địa chỉ API
       body: {
         'user_id': userId,
         'goal_type_id': goalTypeId,

@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String apiUrl = 'http://10.0.2.2/workout/workout_api.php';
+  static const String apiUrl =
+      'https://dae2-171-247-159-64.ngrok-free.app/workout/workout_api.php';
 
   // Lấy danh sách Workouts
   Future<List<dynamic>> fetchWorkouts() async {
@@ -22,7 +23,8 @@ class ApiService {
     required int estimatedDuration,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/workout/add_workout.php'),
+      Uri.parse(
+          'https://dae2-171-247-159-64.ngrok-free.app/workout/add_workout.php'),
       body: {
         'name': name,
         'description': description,
@@ -46,7 +48,8 @@ class ApiService {
     required int workoutId,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/workout/add_exercise.php'),
+      Uri.parse(
+          'https://dae2-171-247-159-64.ngrok-free.app/workout/add_exercise.php'),
       body: {
         'name': name,
         'description': description,
@@ -65,7 +68,7 @@ class ApiService {
   // Lấy danh sách Exercises của workout
   Future<List<dynamic>> fetchExercises(String workoutId) async {
     final response = await http.get(Uri.parse(
-        'http://10.0.2.2/workout/get_exercises.php?workouts_id=$workoutId'));
+        'https://dae2-171-247-159-64.ngrok-free.app/workout/get_exercises.php?workouts_id=$workoutId'));
 
     if (response.statusCode == 200) {
       try {
@@ -87,7 +90,8 @@ class ApiService {
     required String exerciseId,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/workout/add_exercise_to_workout.php'),
+      Uri.parse(
+          'https://dae2-171-247-159-64.ngrok-free.app/workout/add_exercise_to_workout.php'),
       body: {
         'workout_id': workoutId.toString(),
         'exercise_id': exerciseId.toString(),
@@ -105,7 +109,8 @@ class ApiService {
     required String exerciseId,
   }) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/workout/remove_exercise_from_workout.php'),
+      Uri.parse(
+          'https://dae2-171-247-159-64.ngrok-free.app/workout/remove_exercise_from_workout.php'),
       body: {
         'workout_id': workoutId.toString(),
         'exercise_id': exerciseId.toString(),
@@ -119,8 +124,8 @@ class ApiService {
 
   // Lấy tất cả exercise
   Future<List<dynamic>> fetchAllExercises() async {
-    final response =
-        await http.get(Uri.parse('http://10.0.2.2/workout/all_exercises.php'));
+    final response = await http.get(Uri.parse(
+        'https://dae2-171-247-159-64.ngrok-free.app/workout/all_exercises.php'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

@@ -5,6 +5,81 @@ A new Flutter project.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+# DALTDD Fitness 🏋️‍♂️
+
+**DALTDD Fitness** là một ứng dụng di động được phát triển bằng **Flutter**, hỗ trợ người dùng theo dõi và quản lý các hoạt động thể chất, tập luyện và sức khỏe cá nhân. Ứng dụng cung cấp giao diện trực quan, dễ sử dụng cùng các chức năng quản lý bài tập, nhắc nhở lịch trình và theo dõi tiến trình luyện tập.
+
+## 🚀 Tính năng chính
+
+### 📌 1. Đăng nhập & Quản lý tài khoản
+- Hỗ trợ **đăng nhập, đăng ký tài khoản**.
+- Lưu trữ thông tin cá nhân như **cân nặng, chiều cao, tuổi, giới tính**.
+- Quản lý hồ sơ cá nhân, cập nhật thông tin sức khỏe.
+
+### 🏋️ 2. Danh sách bài tập
+- Hiển thị danh sách các bài tập theo **các nhóm cơ** (ngực, lưng, chân, vai...).
+- Hình ảnh minh họa và hướng dẫn chi tiết từng bài tập.
+- Tính năng **bắt đầu tập luyện** với bộ đếm thời gian và số lần lặp.
+
+### 📆 3. Lịch trình tập luyện
+- Tạo **kế hoạch tập luyện** theo ngày, tuần.
+- Nhắc nhở tập luyện qua **thông báo**.
+- Lưu trữ và cập nhật tiến trình tập luyện hàng ngày.
+
+### 📊 4. Theo dõi sức khỏe
+- Ghi lại các chỉ số như **cân nặng, BMI, số bước đi hàng ngày**.
+- Biểu đồ theo dõi sự thay đổi của các chỉ số theo thời gian.
+
+### 📷 5. Quản lý hình ảnh tiến trình tập luyện
+- Người dùng có thể **chụp ảnh hoặc tải lên ảnh** trước & sau khi tập để so sánh tiến bộ.
+- Hỗ trợ hiển thị lịch sử ảnh tập luyện theo ngày.
+
+## 📂 Cấu trúc thư mục
+```
+DALTDD_fitness/
+├── lib/                     # Mã nguồn chính
+│   ├── main.dart            # Điểm khởi đầu ứng dụng
+│   ├── pages/               # Các trang giao diện
+│   │   ├── login_page.dart  # Trang đăng nhập
+│   │   ├── dashboard.dart   # Màn hình chính
+│   │   ├── workout_page.dart# Danh sách bài tập
+│   │   ├── profile_page.dart# Hồ sơ cá nhân
+│   ├── widgets/             # Các widget tái sử dụng
+│   ├── models/              # Các model dữ liệu
+├── assets/                  # Chứa hình ảnh, icon
+├── pubspec.yaml             # Cấu hình dependencies
+├── README.md                # Hướng dẫn sử dụng
+```
+
+## 🛠 Công nghệ sử dụng
+- **Flutter** (Dart) - Framework chính để phát triển ứng dụng.
+- **Firebase Authentication** - Để đăng nhập và quản lý tài khoản.
+- **SQLite** - Cơ sở dữ liệu cục bộ để lưu trữ bài tập và lịch sử luyện tập.
+- **Provider** - Quản lý trạng thái ứng dụng.
+- **SharedPreferences** - Lưu trữ dữ liệu tạm thời như chế độ dark mode, lịch sử đăng nhập.
+
+## 🔧 Cài đặt & Chạy ứng dụng
+
+### 1️⃣ Cài đặt Flutter SDK
+Nếu chưa có, hãy cài đặt Flutter theo hướng dẫn tại: [Flutter Installation Guide](https://flutter.dev/docs/get-started/install)
+
+### 2️⃣ Clone dự án
+```bash
+git clone https://github.com/totgokhung123/daltdd.git
+cd daltdd
+```
+
+### 3️⃣ Cài đặt dependencies
+```bash
+flutter pub get
+```
+
+### 4️⃣ Chạy ứng dụng
+```bash
+flutter run
+```
+
+> **Lưu ý**: Nếu chạy trên thiết bị thật, cần bật chế độ **Developer Mode** và **USB Debugging**.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -14,7 +89,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
+## 🎨 Hình ảnh giao diện
 #Preview demo:
 ![image](https://github.com/user-attachments/assets/ea978214-a844-43d6-a5b1-c04c395dd2c5)
 ![image](https://github.com/user-attachments/assets/215a7ae7-798d-4a11-8734-b988668bb934)
